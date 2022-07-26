@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="icon" href="./images/logo.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./css/style.css">
+    <title>Notz</title>
+</head>
+<body>
+
+    <!-- <input id="feito" type="checkbox">
+            <label for="feito">Feito</label> -->
+
+    <header>
+        <div id="container-img-logo">
+            <img id="img-logo" src="./images/logo.png" alt="Imagem do site Notz">
+            <p id="texto-logo">Notz</p>
+        </div>
+        <div>
+            <button class="primary-btn" id="btn-add-tarefa">Nova Tarefa</button>
+        </div>
+    </header>
+
+
+    <div id="empty-note">
+        <p id="texto-empty-note">Você não possui nehuma nota...</p>
+        <img id="img-empty-note" src="./images/empty-notes2.png" alt="Imagem de uma pessoa cirando um lembrete">
+    </div>
+
+    <div id="modal-container">
+
+        <div id="modal">
+
+            
+            <form id="form">
+                <h2>Adicione uma nova nota</h2>
+                <div id="titulo" class="form-item">
+                    <label class="label" for="titulo">Título</label>
+                      <input name="titulo" class="input" id="titulo" type="text" required>
+                </div>
+    
+                <div id="descricao" class="form-item">
+                    <label class="label" for="descricao">Descrição</label>
+                    <input name="descricao" class="input" id="descricao" type="text" required>
+                </div>
+    
+                <div id="data" class="form-item">
+                    <label class="label" for="data">Data</label>
+                    <input name="data" class="input" id="data" type="date" required>
+                </div>
+    
+                <div id="categoria" class="form-item">
+                    <label class="label" for="categoria">Categoria</label>
+                    <select class="input" name="categoria" id="categoria" required>
+                        <option selected value="trabalho">Trabalho</option>
+                        <option value="escola">Escola</option>
+                        <option value="casa">Casa</option>
+                        <option value="outros">Outros</option>
+                    </select>
+                </div>
+                <div class="form-item" id="modal-btn-container">
+                    <button class="btn-modal" id="btn-modal-add" type="submit" >Adicionar</button>
+                    <button class="btn-modal" id="btn-modal-can" type="reset">Cancelar</button>
+                </div>
+            </form>
+    
+        </div>
+
+    </div>
+
+    
+    
+    <script  type="module" src="./js/View.js"></script>
+    <script>
+        if(!localStorage.getItem('tarefas')){
+            localStorage.setItem('tarefas', JSON.stringify([]))
+        }
+        
+    </script>
+</body>
+</html>
