@@ -1,11 +1,4 @@
 {
   "tarefas": [
-    {
-      "titulo": "teste",
-      "descricao": "aaa",
-      "data": "2022-07-14",
-      "categoria": "trabalho",
-      "id": 1
-    }
   ]
 }
