@@ -1,85 +1,180 @@
-export class Controller {
+import { DAO } from "./DAO.js";
+import { View } from "./View.js";
 
-    listarTarefas(){
-        let tarefas = localStorage.getItem('tarefas')
-        tarefas = JSON.parse(tarefas)
-        return tarefas
-    }
+if (!localStorage.getItem('tarefas')) {
+    localStorage.setItem('tarefas', JSON.stringify([]))
+}
 
-    adicionaTarefa(nova_tarefa){
-        let tarefas = this.listarTarefas()
-        tarefas.push(nova_tarefa)
-        this.atualizaLocalStorage(tarefas)
+const $ = document.querySelector.bind(document)
+const dao = new DAO()
+const view = new View()
 
-        //apenas na versão com json
-        this.adicionaTarefaServerJSON(nova_tarefa)
-    }
+carregaHome()
 
-    removeTarefa(id){
-        let tarefas = this.listarTarefas()
-        let tarefas_atualizada = tarefas.filter((tarefa) => tarefa.id != id)
-        this.atualizaLocalStorage(tarefas_atualizada)
+function carregaHome(){
 
-        //apenas na versão com json
-        this.removeTarefaServerJSON(id)
+    let tarefas = dao.listarTarefas()
 
-
-    }
-    
-    atualizaTarefa(tarefa){
-        this.removeTarefa(tarefa.id)
-        this.adicionaTarefa(tarefa)
-
-        //apenas na versão com json
-        this.atualizaTarefaServerJSON(tarefa)
-    }
-
-    atualizaLocalStorage(tarefas){
-        localStorage.clear()
-        localStorage.setItem('tarefas', JSON.stringify(tarefas))
-    }
-
-    getId(){
-        let id = this.listarTarefas().length
-        return id++
-    }
-
-    //Métodos do JSON Server
-
-    adicionaTarefaServerJSON(tarefa){
-
-        delete tarefa.id
-
-        fetch("http://localhost:3000/tarefas", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify(tarefa)
-        }).then(res => res.json())  
-    }
-
-    removeTarefaServerJSON(id){
-
-        fetch(`http://localhost:3000/tarefas/${id}`, {
-            method: "DELETE",
-            headers: {
-                "Content-Type": "application/json"
-            },
-        }).then(res => res.json())
-    }
-
-    atualizaTarefaServerJSON(tarefa){
-
-        fetch("http://localhost:3000/tarefas", {
-            method: "PUT",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify(tarefa)
-        }).then(res => res.json())
+    if(!tarefas.length) {
+        $('#container').style.display = 'none'
+        $('#empty-note').style.display = 'flex'
+    } else {
+        $('#container').style.display = 'flex'
+        $('#empty-note').style.display = 'none'
+        
+        view.atualizaInterface()
+        carregaApagarBtns()
+        carregaEditarBtns()
+        carregaChecks()
     }
 
 }
 
+const modal = $('#modal-container')
+$('#btn-add-tarefa').addEventListener('click', () => iniciaModal())
+$("#texto-empty-note").addEventListener('click', () => iniciaModal())
+$("#btn-img").addEventListener('click', () => iniciaModal())
+$('#btn-modal-can').addEventListener('click', () => quitModal())
+
+function iniciaModal() {
+    modal.style.visibility = 'visible'
+}
+function quitModal(){
+    modal.style.visibility = 'hidden'
+}
+
+const modal_editar = $('#modal-container-edit')
+$('#btn-modal-can-edit').addEventListener('click', () => quitModalEdit())
+
+function iniciaModalEdit() {
+    modal_editar.style.visibility = 'visible'
+}
+function quitModalEdit(){
+    modal_editar.style.visibility = 'hidden'
+}
+
+// Adicionar Tarefa
+$('#form').addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    const { titulo, descricao, data, categoria } = e.target
+
+    const nova_tarefa = {
+        titulo: titulo.value,
+        descricao: descricao.value,
+        data: data.value,
+        categoria: categoria.value,
+        feito: false,
+        id: dao.getId()
+    }
+
+    titulo.value = ''
+    descricao.value = ''
+    // data.value = ''
+
+    await dao.adicionaTarefa(nova_tarefa)
+    quitModal()
+    carregaHome()                      
     
+})
+
+// Apagar Tarefa
+function carregaApagarBtns(){
+
+    const apagar_btns = document.querySelectorAll('.btn-apagar')
+
+    apagar_btns.forEach(apagar_btn => {
+
+        apagar_btn.onclick = async () => {
+            let idTarefa = parseInt(apagar_btn.parentElement.parentElement.id)
+            await dao.removeTarefa(idTarefa)
+            carregaHome()
+        }
+    })
+}
+
+// Editar Tarefa 
+function carregaEditarBtns(){
+
+    const editar_btns = document.querySelectorAll('.btn-editar')
+
+    editar_btns.forEach(editar_btn => {
+
+        editar_btn.onclick = async () => {
+
+            let tarefa = dao.buscaPorId(parseInt(editar_btn.parentElement.parentElement.id))
+
+            $('input#titulo-edit').value = tarefa.titulo
+            $('textarea#descricao-edit').value = tarefa.descricao
+            $('input#data-edit').value = tarefa.data
+            $('select#categoria-edit').value = tarefa.categoria
+            $('#id-tarefa').value = tarefa.id
+
+            iniciaModalEdit()
+        }
+
+    })
+
+}
+$('#form-edit').addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    const { titulo, descricao, data, categoria } = e.target
+
+    const tarefa_atualizada = {
+        titulo: titulo.value,
+        descricao: descricao.value,
+        data: data.value,
+        categoria: categoria.value,
+        feito: false,
+        id: parseInt($('#id-tarefa').value)
+    }
+
+
+    await dao.atualizaTarefa(tarefa_atualizada)
+    quitModalEdit()
+    carregaHome()                      
+})
+
+// CheckBox da tarefa 
+function carregaChecks(){
+
+    let checks = document.querySelectorAll('.check')
+
+    checks.forEach(check => {
+
+        check.onclick = () => {
+
+            let idTarefa = parseInt(check.parentElement.parentElement.id)
+
+            dao.atualizaCheck(idTarefa)
+
+            if(check.classList.contains('note-nao-feito')){
+                check.classList.remove('note-nao-feito')
+                check.classList.add('note-feito')
+            } else {
+                check.classList.remove('note-feito')
+                check.classList.add('note-nao-feito')
+            }
+        
+        }
+    })
+
+}
+
+//alerta de tarefas vencidas
+alertaTarefaVencida()
+function alertaTarefaVencida(){
+    const dataAtual = new Intl.DateTimeFormat('fr-CA').format(new Date())
+
+    let tarefas = dao.listarTarefas()
+    tarefas.forEach(tarefa => {
+        if(dataAtual > String(tarefa.data) && !tarefa.feito){
+            alert(`Eita! Parece que alguem se esqueceu...\n\nA tarefa '${tarefa.titulo}' já passou do prazo.
+            `)
+        }
+    })
+}
+
+
+

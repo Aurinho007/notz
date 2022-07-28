@@ -1,52 +1,60 @@
-import { Controller } from "./Controller.js";
+import { DAO } from "./DAO.js"
+import { Helper } from "./Helper.js"
+export class View{
 
-if (!localStorage.getItem('tarefas')) {
-    localStorage.setItem('tarefas', JSON.stringify([]))
-}
+    constructor(){
 
-let $ = document.querySelector.bind(document)
-let controller = new Controller
-
-
-const form = $('#form')
-form.addEventListener('submit', async (e) => {
-    e.preventDefault();
-
-    const { titulo, descricao, data, categoria } = e.target
-
-    const nova_tarefa = {
-        titulo: titulo.value,
-        descricao: descricao.value,
-        data: data.value,
-        categoria: categoria.value
+        this.dao = new DAO()
+        this.helper = new Helper()
+        this.container = document.querySelector('#container')
     }
 
-    controller.adicionaTarefa(nova_tarefa)
+    atualizaInterface(){
 
-})
+        let tarefas = this.dao.listarTarefas()
+        this._populaContainerTarefas(tarefas)   
+    }
 
+    _populaContainerTarefas(tarefas){
 
-$('#btn-add-tarefa').addEventListener('click', () => iniciaModal())
-$("#texto-empty-note").addEventListener('click', () => iniciaModal())
-$("#img-empty-note").addEventListener('click', () => iniciaModal())
+        let categorias = this.helper.organizaCategorias(tarefas)
+        this.container.innerHTML = ''
+        categorias.forEach(categoria => {
 
-function iniciaModal() {
+            let tarefas_por_categoria = tarefas.filter((tarefa) => 
+                tarefa.categoria === categoria)
 
-    const modal = $('#modal-container')
-    modal.style.visibility = 'visible'
+            let tarefaHTML = ''
 
-    $('#btn-modal-can').addEventListener('click', (e) => {
-        e.preventDefault()
-        modal.style.visibility = 'hidden'
-    })
-}
-
-function confereEmptyImg() {
-    let tarefas = localStorage.getItem('tarefas')
-    if (!JSON.parse(tarefas).length) {
-        $('#empty-note').style.display = 'flex'
-    } else {
-        $('#empty-note').style.display = 'none'
+            tarefas_por_categoria.forEach((tarefa) => {
+                tarefaHTML += `
+                <div class="tarefa" id="${tarefa.id}">
+                <div class="note-header">
+                <div class="note-titulo">
+                ${tarefa.titulo} - ${this.helper.formataData(tarefa.data)}
+                </div>
+                <div class="${tarefa.feito ? 'note-feito' :  'note-nao-feito'} check"> 
+                </div>
+                </div>
+                <div class="note-body">
+                <div class="note-descricao">
+                ${tarefa.descricao}
+                </div>
+                </div>
+                <div class="note-foot">
+                <button class="btn-editar">Editar</button>
+                <button class="btn-apagar">Apagar</button>
+                </div>
+                </div>
+                `
+            })
+            this.container.innerHTML += `
+                <div class="container-tarefas">
+                    <p class="titulo-categoria ${categoria}">${categoria}</p>
+                    ${tarefaHTML}
+                </div>
+            `
+        })
+        
     }
 }
-confereEmptyImg()

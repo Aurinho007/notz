@@ -6,9 +6,10 @@
     --black: #000;
     --white: #EFE9F4;
     --yellow: #fed045;
-    --l-yellow: #FEE390;
+    --l-yellow: #fee290;
     --dark-blue: #FE6847;
     --light-blue: #57B8FF;
+    --feito: #43C59E;
 
     --font1: 'Eczar', serif;
     --font2: 'Patua One', cursive;
@@ -26,6 +27,7 @@ body{
     flex-direction: column;
     align-items: center; 
     padding: 0 150px;
+    background-color: #000;
 }
 
 header{
@@ -80,18 +82,35 @@ header{
     }
 }
 
+#img-container{
+    position: relative;
+}
+
 #img-empty-note{
     width: 40vw;
     min-width: 200px;
-    max-width: 500px;
+    max-width: 300px;
+    padding: 30px;
+    z-index: 0;
 }
 
+#btn-img{
+    position: absolute;
+    top: 40%;
+    left: 45%;
+    width: 50px;
+    height: 50px;
+    z-index: 1;
+    opacity: 0;
+}
 
 #texto-empty-note{
     font-family: var(--font2);
     font-size: 1.3rem;
     border-bottom: solid 3px var(--yellow);
+    text-align: center;
     cursor: pointer;
+    color: var(--white)
 }
 
 #texto-empty-note:hover{
@@ -99,32 +118,28 @@ header{
 }
 
 
-::-webkit-scrollbar {
-    width: 10px;
+#id-tarefa {
+    visibility: hidden;
 }
-
-::-webkit-scrollbar-thumb {
-    background: var(--light-blue); 
-    border-radius: 10px;
-}
-
 
 
 #container{
     width: 70vw;
     max-width: 600px;
-    height: 600px;
+    height: auto;
     margin-top: 200px;
-    overflow-y: scroll;
     display: flex;
     flex-direction: column;
     align-items: center;
+    padding-bottom: 200px;
 }
 
 .container-tarefas{
+    width: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
+    margin-bottom: 20px;
 
 }
 
@@ -132,16 +147,28 @@ header{
     font-family: var(--font3);
     font-weight: bold;
     font-size: 1.2rem;
-    background-color: var(--dark-blue);
-    width: 97%;
+    width: 95%;
+    border-bottom: solid 4px var(--light-blue);
     text-align: center;
-    border-radius: 5px;
+    color: var(--white);
 }
 
+.Casa{
+    border-bottom: solid 4px #43C59E
+}
+.Trabalho{
+    border-bottom: solid 4px #FE6847
+}
+.Escola{
+    border-bottom: solid 4px #57B8FF
+}
+.Outros{
+    border-bottom: solid 4px #fed045
+}
 
 .tarefa{
     width: 97%;
-    height: 100px;
+    height: auto;
     padding: 8px;
     margin: 5px;
     border-radius: 8px;
@@ -157,13 +184,26 @@ header{
 .note-titulo{
     font-family: var(--font2);
 }
+
 .note-feito{
-    width: 18px;
-    height: 18px;
-    background-color: var(--l-yellow);
-    border: solid 3px var(--black);
+    width: 25px;
+    height: 25px;
+    border: solid 4px var(--black);
     cursor: pointer;
+    border-radius: 50px;
+    background-color: var(--feito);
 }
+
+.note-nao-feito{
+    width: 25px;
+    height: 25px;
+    border: solid 4px var(--black);
+    cursor: pointer;
+    border-radius: 50px;
+    background-color: var(--l-yellow);
+}
+
+
 
 .note-body{
     width: 95%;
@@ -175,6 +215,7 @@ header{
     width: 100%;
     height: 100%;
     text-align: left;
+    padding-bottom: 15px;
 
 }
 
@@ -193,6 +234,7 @@ header{
     opacity: 0.8;
     cursor: pointer;
     font-size: 11px;
+    right: 0;
 }
 
 .btn-editar:hover, .btn-apagar:hover{
@@ -200,7 +242,7 @@ header{
     border-bottom: solid 1px var(--black);
 }
 
-#modal-container{
+#modal-container, #modal-container-edit{
     background-color: rgba(0, 0, 0,.6);
     position: fixed;
     width: 100vw;
@@ -214,16 +256,14 @@ header{
     visibility: hidden;
 }
 
-#modal{
+#modal, #modal-editar{
     position: absolute;
     width: 80vw;
     max-width: 450px;
     height: auto;
     background-color: var(--l-yellow);
     border-radius: 10px;
-    border: solid 4px var(--dark-blue);
     color: var(--black);
-    box-shadow: 2px 2px 10px var(--black);
 }
 
 h2{
@@ -231,7 +271,7 @@ h2{
     margin-bottom: 20px;
 }
 
-#form{
+#form, #form-edit{
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -257,11 +297,11 @@ h2{
     max-width: 400px;
 }
 
-#descricao{
+#descricao, #descricao-edit{
     height: 75px;
 }
 
-#modal-btn-container{
+#modal-btn-container, #modal-btn-container-edit{
     display: flex;
     flex-direction: row;
 }
@@ -277,6 +317,7 @@ h2{
     margin: 15px 5px;
     border-radius: 5px;
 }
+
 
 
 

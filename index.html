@@ -26,149 +26,15 @@
 
     <div id="empty-note">
         <p id="texto-empty-note">Você não possui nehuma nota...</p>
-        <img id="img-empty-note" src="./images/empty-notes2.png" alt="Imagem de uma pessoa cirando um lembrete">
+        <div id="img-container">
+            <img id="img-empty-note" src="./images/empty-notes.svg" alt="Imagem de uma pessoa cirando um lembrete">
+            <button id="btn-img"></button>
+        </div>
     </div>
 
     <div id="container">
-
-        <div class="container-tarefas">
-
-            <p class="titulo-categoria">Trabalho</p>
-
-            <div class="tarefa">
-                <div class="note-header">
-                    <div class="note-titulo">
-                        teste - 26/07/22
-                    </div>
-                    <div class="note-feito">
-    
-                    </div>
-                </div>
-                <div class="note-body">
-                    <div class="note-descricao">
-                    aaaa aaaae teste teste teste este teste teste teste teste teste teste teste este teste teste teste
-                    </div>
-                </div>
-                <div class="note-foot">
-                    <button class="btn-editar">Editar</button>
-                    <button class="btn-apagar">Apagar</button>
-                </div>
-            </div>
-            <div class="tarefa">
-                <div class="note-header">
-                    <div class="note-titulo">
-                        teste - 26/07/22
-                    </div>
-                    <div class="note-feito">
-    
-                    </div>
-                </div>
-                <div class="note-body">
-                    <div class="note-descricao">
-                    aaaa aaaae teste teste teste este teste teste teste teste teste teste teste este teste teste teste
-                    </div>
-                </div>
-                <div class="note-foot">
-                    <button class="btn-editar">Editar</button>
-                    <button class="btn-apagar">Apagar</button>
-                </div>
-            </div>
-            
-        </div>
-
-        <div class="container-tarefas">
-
-            <p class="titulo-categoria">Escola</p>
-
-            <div class="tarefa">
-                <div class="note-header">
-                    <div class="note-titulo">
-                        teste - 26/07/22
-                    </div>
-                    <div class="note-feito">
-    
-                    </div>
-                </div>
-                <div class="note-body">
-                    <div class="note-descricao">
-                    aaaa aaaae teste teste teste este teste teste teste teste teste teste teste este teste teste teste
-                    </div>
-                </div>
-                <div class="note-foot">
-                    <button class="btn-editar">Editar</button>
-                    <button class="btn-apagar">Apagar</button>
-                </div>
-            </div>
-            <div class="tarefa">
-                <div class="note-header">
-                    <div class="note-titulo">
-                        teste - 26/07/22
-                    </div>
-                    <div class="note-feito">
-    
-                    </div>
-                </div>
-                <div class="note-body">
-                    <div class="note-descricao">
-                    aaaa aaaae teste teste teste este teste teste teste teste teste teste teste este teste teste teste
-                    </div>
-                </div>
-                <div class="note-foot">
-                    <button class="btn-editar">Editar</button>
-                    <button class="btn-apagar">Apagar</button>
-                </div>
-            </div>
-            
-        </div>
-
-        <div class="container-tarefas">
-
-            <p class="titulo-categoria">Casa</p>
-
-            <div class="tarefa">
-                <div class="note-header">
-                    <div class="note-titulo">
-                        teste - 26/07/22
-                    </div>
-                    <div class="note-feito">
-    
-                    </div>
-                </div>
-                <div class="note-body">
-                    <div class="note-descricao">
-                    aaaa aaaae teste teste teste este teste teste teste teste teste teste teste este teste teste teste
-                    </div>
-                </div>
-                <div class="note-foot">
-                    <button class="btn-editar">Editar</button>
-                    <button class="btn-apagar">Apagar</button>
-                </div>
-            </div>
-            <div class="tarefa">
-                <div class="note-header">
-                    <div class="note-titulo">
-                        teste - 26/07/22
-                    </div>
-                    <div class="note-feito">
-    
-                    </div>
-                </div>
-                <div class="note-body">
-                    <div class="note-descricao">
-                    aaaa aaaae teste teste teste este teste teste teste teste teste teste teste este teste teste teste
-                    </div>
-                </div>
-                <div class="note-foot">
-                    <button class="btn-editar">Editar</button>
-                    <button class="btn-apagar">Apagar</button>
-                </div>
-            </div>
-            
-        </div>
-
     </div>
 
-    
 
     <div id="modal-container">
         <div id="modal">
@@ -176,12 +42,12 @@
                 <h2>Adicione uma nova nota</h2>
                 <div id="titulo" class="form-item">
                     <label class="label" for="titulo" >Título</label>
-                    <input name="titulo" class="input" id="titulo" type="text" maxlength="15" autocomplete="off" required>
+                    <input name="titulo" class="input" id="titulo" type="text" maxlength="20" autocomplete="off" required>
                 </div>
 
                 <div id="descricao" class="form-item">
                     <label class="label" for="descricao">Descrição</label>
-                    <textarea name="descricao" class="input" id="descricao"  maxlength="100" autocomplete="off" required></textarea>
+                    <textarea name="descricao" class="input" id="descricao" autocomplete="off" required></textarea>
                 </div>
 
                 <div id="data" class="form-item">
@@ -192,10 +58,10 @@
                 <div id="categoria" class="form-item">
                     <label class="label" for="categoria">Categoria</label>
                     <select class="input" name="categoria" id="categoria" required>
-                        <option selected value="trabalho">Trabalho</option>
-                        <option value="escola">Escola</option>
-                        <option value="casa">Casa</option>
-                        <option value="outros">Outros</option>
+                        <option selected value="Trabalho">Trabalho</option>
+                        <option value="Escola">Escola</option>
+                        <option value="Casa">Casa</option>
+                        <option value="Outros">Outros</option>
                     </select>
                 </div>
                 <div class="form-item" id="modal-btn-container">
@@ -206,8 +72,45 @@
         </div>
     </div>
 
+    <div id="modal-container-edit">
+        <div id="modal-editar">
+            <form id="form-edit">
+                <input id="id-tarefa">
+                <h2>Adicione uma nova nota</h2>
+                <div id="titulo-edit" class="form-item">
+                    <label class="label" for="titulo" >Título</label>
+                    <input name="titulo" class="input" id="titulo-edit" type="text" maxlength="20" autocomplete="off" required>
+                </div>
 
-    <script type="module" src="./js/View.js"></script>
+                <div id="descricao" class="form-item">
+                    <label class="label" for="descricao">Descrição</label>
+                    <textarea name="descricao" class="input" id="descricao-edit" autocomplete="off" required></textarea>
+                </div>
+
+                <div id="data-edit" class="form-item">
+                    <label class="label" for="data">Data</label>
+                    <input name="data" class="input" id="data-edit" type="date" required>
+                </div>
+
+                <div id="categoria-edit" class="form-item">
+                    <label class="label" for="categoria">Categoria</label>
+                    <select class="input" name="categoria" id="categoria-edit" required>
+                        <option selected value="Trabalho">Trabalho</option>
+                        <option value="Escola">Escola</option>
+                        <option value="Casa">Casa</option>
+                        <option value="Outros">Outros</option>
+                    </select>
+                </div>
+                <div class="form-item" id="modal-btn-container-edit">
+                    <button class="btn-modal" id="btn-modal-salvar-edit" type="submit">Salvar</button>
+                    <button class="btn-modal" id="btn-modal-can-edit" type="reset">Cancelar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+
+    <script type="module" src="./js/Controller.js"></script>
 </body>
 
 </html>
