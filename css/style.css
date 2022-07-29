@@ -8,7 +8,7 @@
     --yellow: #fed045;
     --l-yellow: #fee290;
     --dark-blue: #FE6847;
-    --light-blue: #57B8FF;
+    --light-blue: #5DA9E9;
     --feito: #43C59E;
 
     --font1: 'Eczar', serif;
@@ -38,8 +38,15 @@ header{
     position: fixed;
     width: 100%;
     height: 85px;
-    background-color: var(--light-blue);
+    background-color: var(--black);
+    border-bottom: solid 3px var(--white);
     z-index: 1;
+}
+
+#container-img-logo{
+    display: flex;
+    flex-direction: column;
+    align-items:flex-start;
 }
 
 #img-logo{
@@ -49,17 +56,18 @@ header{
 
 #texto-logo{
     font-family: var(--font1);
-    font-size: 1.2rem;
-    color: var(--black);
+    font-size: 1.4rem;
+    text-align: left;
+    color: var(--white);
     margin-top: -10px;
 }
 
 #btn-add-tarefa{
     border: none;
-    background-color: var(--yellow);
-    color: var(--black);
+    background-color: var(--black);
+    color: var(--white);
     font-family: var(--font2);
-    font-size: 1.1rem;
+    font-size: 1rem;
     border: 2px solid var(--yellow);
     padding: 3px 10px;
     border-radius: 5px;
@@ -147,7 +155,7 @@ header{
     font-family: var(--font3);
     font-weight: bold;
     font-size: 1.2rem;
-    width: 95%;
+    width: 50%;
     border-bottom: solid 4px var(--light-blue);
     text-align: center;
     color: var(--white);
@@ -163,16 +171,16 @@ header{
     border-bottom: solid 4px #57B8FF
 }
 .Outros{
-    border-bottom: solid 4px #fed045
+    border-bottom: solid 4px #6D326D
 }
-
 .tarefa{
     width: 97%;
     height: auto;
     padding: 8px;
     margin: 5px;
-    border-radius: 8px;
-    background-color: var(--l-yellow);
+    border-radius:5px;
+    background-color: var(--black);
+    border: solid 3px var(--l-yellow);
     position: relative;
 }
 
@@ -183,12 +191,13 @@ header{
 
 .note-titulo{
     font-family: var(--font2);
+    color: var(--white);
 }
 
 .note-feito{
     width: 25px;
     height: 25px;
-    border: solid 4px var(--black);
+    border: solid 3px var(--white);
     cursor: pointer;
     border-radius: 50px;
     background-color: var(--feito);
@@ -197,10 +206,10 @@ header{
 .note-nao-feito{
     width: 25px;
     height: 25px;
-    border: solid 4px var(--black);
+    border: solid 3px var(--white);
     cursor: pointer;
     border-radius: 50px;
-    background-color: var(--l-yellow);
+    background-color: var(--black);
 }
 
 
@@ -216,6 +225,7 @@ header{
     height: 100%;
     text-align: left;
     padding-bottom: 15px;
+    color: var(--white)
 
 }
 
@@ -227,14 +237,15 @@ header{
 }
 
 .btn-editar, .btn-apagar{
-    border: solid 1px var(--l-yellow);
-    background-color: var(--l-yellow);
+    border: solid 1px var(--black);
+    background-color: var(--black);
     margin: 4px;
     font-weight: bold;
     opacity: 0.8;
     cursor: pointer;
     font-size: 11px;
     right: 0;
+    color: var(--white);
 }
 
 .btn-editar:hover, .btn-apagar:hover{
