@@ -74,7 +74,7 @@ header{
 }
 
 #btn-add-tarefa:hover{
-    border: 2px solid var(--black);
+    border: 2px solid var(--feito);
 
 }
 
