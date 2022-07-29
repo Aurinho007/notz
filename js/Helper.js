@@ -5,6 +5,19 @@ export class Helper{
         return data_formatada
     }
 
+    dataAmanhaTexto(){
+        const dataAtual = new Date();
+
+        const dataAmanhaFormatada =
+             new Intl.DateTimeFormat('fr-CA')
+                .format(dataAtual
+                .setDate(
+                    dataAtual.getDate() + 1)
+                )
+
+        return dataAmanhaFormatada
+    }
+
     organizaCategorias(tarefas){
 
         let categorias = tarefas.map((tarefa) => tarefa.categoria)

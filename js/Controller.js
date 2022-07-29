@@ -1,4 +1,5 @@
 import { DAO } from "./DAO.js";
+import { Helper } from "./Helper.js";
 import { View } from "./View.js";
 
 if (!localStorage.getItem('tarefas')) {
@@ -8,9 +9,9 @@ if (!localStorage.getItem('tarefas')) {
 const $ = document.querySelector.bind(document)
 const dao = new DAO()
 const view = new View()
+const helper = new Helper()
 
 carregaHome()
-
 function carregaHome(){
 
     let tarefas = dao.listarTarefas()
@@ -28,29 +29,6 @@ function carregaHome(){
         carregaChecks()
     }
 
-}
-
-const modal = $('#modal-container')
-$('#btn-add-tarefa').addEventListener('click', () => iniciaModal())
-$("#texto-empty-note").addEventListener('click', () => iniciaModal())
-$("#btn-img").addEventListener('click', () => iniciaModal())
-$('#btn-modal-can').addEventListener('click', () => quitModal())
-
-function iniciaModal() {
-    modal.style.visibility = 'visible'
-}
-function quitModal(){
-    modal.style.visibility = 'hidden'
-}
-
-const modal_editar = $('#modal-container-edit')
-$('#btn-modal-can-edit').addEventListener('click', () => quitModalEdit())
-
-function iniciaModalEdit() {
-    modal_editar.style.visibility = 'visible'
-}
-function quitModalEdit(){
-    modal_editar.style.visibility = 'hidden'
 }
 
 // Adicionar Tarefa
@@ -97,8 +75,9 @@ function carregaApagarBtns(){
 function carregaEditarBtns(){
 
     const editar_btns = document.querySelectorAll('.btn-editar')
-
+    
     editar_btns.forEach(editar_btn => {
+        console.log(editar_btn)
 
         editar_btn.onclick = async () => {
 
@@ -106,7 +85,7 @@ function carregaEditarBtns(){
 
             $('input#titulo-edit').value = tarefa.titulo
             $('textarea#descricao-edit').value = tarefa.descricao
-            $('input#data-edit').value = tarefa.data
+            $('input#data-input-edit').value = tarefa.data
             $('select#categoria-edit').value = tarefa.categoria
             $('#id-tarefa').value = tarefa.id
 
@@ -165,15 +144,72 @@ function carregaChecks(){
 //alerta de tarefas vencidas
 alertaTarefaVencida()
 function alertaTarefaVencida(){
-    const dataAtual = new Intl.DateTimeFormat('fr-CA').format(new Date())
 
+    const dataAtual = new Intl.DateTimeFormat('fr-CA').format(new Date())
     let tarefas = dao.listarTarefas()
-    tarefas.forEach(tarefa => {
-        if(dataAtual > String(tarefa.data) && !tarefa.feito){
-            alert(`Eita! Parece que alguem se esqueceu...\n\nA tarefa '${tarefa.titulo}' já passou do prazo.
-            `)
-        }
+    let mensagem = ''
+
+    const tarefasVencidas = tarefas.filter(tarefa => {
+        return dataAtual > String(tarefa.data) && !tarefa.feito
     })
+
+    if(tarefasVencidas.length){
+        tarefasVencidas.forEach((tarefaVencida) => {
+            mensagem += `${tarefaVencida.titulo} que era pro dia ${helper.formataData(tarefaVencida.data)}\n`
+        })
+            
+        alert(`Hmmm... Parece que alguém se esqueceu de\n\n${mensagem}`)
+}
+   
+}
+
+// alerta tarefa para amanhã 
+alertaTarefaProxima()
+function alertaTarefaProxima(){
+
+    const dataAmanha = helper.dataAmanhaTexto()
+    let mensagem = ''
+    let tarefas = dao.listarTarefas()
+
+    const tarefasAmanha = tarefas.filter(tarefa => {
+        return String(tarefa.data) === dataAmanha && !tarefa.feito
+    })
+
+    if(tarefasAmanha.length){
+        tarefasAmanha.forEach((tarefaVencida) => {
+            mensagem += `${tarefaVencida.titulo}\n`
+        })
+
+        
+            
+        alert(`Eita! Olha ai o que você tem para amanhã:\n\n${mensagem}`)
+}
+
+}
+
+// Modal
+
+const modal = $('#modal-container')
+$('#btn-add-tarefa').addEventListener('click', () => iniciaModal())
+$("#texto-empty-note").addEventListener('click', () => iniciaModal())
+$("#btn-img").addEventListener('click', () => iniciaModal())
+$('#btn-modal-can').addEventListener('click', () => quitModal())
+
+function iniciaModal() {
+    modal.style.visibility = 'visible'
+}
+function quitModal(){
+    modal.style.visibility = 'hidden'
+}
+
+const modal_editar = $('#modal-container-edit')
+$('#btn-modal-can-edit').addEventListener('click', () => quitModalEdit())
+
+function iniciaModalEdit() {
+    modal_editar.style.visibility = 'visible'
+}
+function quitModalEdit(){
+    modal_editar.style.visibility = 'hidden'
 }
 
 

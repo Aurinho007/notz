@@ -52,7 +52,7 @@
 
                 <div id="data" class="form-item">
                     <label class="label" for="data">Data</label>
-                    <input name="data" class="input" id="data" type="date" required>
+                    <input name="data" class="input" id="data-input" type="date" required>
                 </div>
 
                 <div id="categoria" class="form-item">
@@ -89,7 +89,7 @@
 
                 <div id="data-edit" class="form-item">
                     <label class="label" for="data">Data</label>
-                    <input name="data" class="input" id="data-edit" type="date" required>
+                    <input name="data" class="input" id="data-input-edit" type="date" required>
                 </div>
 
                 <div id="categoria-edit" class="form-item">
@@ -111,6 +111,19 @@
 
 
     <script type="module" src="./js/Controller.js"></script>
+    <script>
+
+        const dateInput = document.querySelector('#data-input');
+        dateInput.onfocus = () => {
+            dateInput.min = new Date().toISOString().split("T")[0];
+        }
+
+        const dateInput2 = document.querySelector('#data-input-edit');
+        dateInput2.onfocus = () => {
+            dateInput2.min = new Date().toISOString().split("T")[0];
+        }
+
+    </script>
 </body>
 
 </html>
